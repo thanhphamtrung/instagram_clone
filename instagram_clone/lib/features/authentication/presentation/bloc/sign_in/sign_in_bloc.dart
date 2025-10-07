@@ -1,9 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:instagram_clone/core/di/di_container.dart';
 import 'package:instagram_clone/features/authentication/domain/usecase/sign_in_with_email_password.dart';
 import 'package:meta/meta.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 part 'sign_in_event.dart';
 part 'sign_in_state.dart';

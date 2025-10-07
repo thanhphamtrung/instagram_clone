@@ -29,5 +29,7 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
 
   // Add cross-flavor configuration here
 
+  
+
   runApp(await builder());
 }

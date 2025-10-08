@@ -1,5 +1,6 @@
 import 'package:instagram_clone/core/di/di_container.dart';
 import 'package:instagram_clone/features/authentication/data/dto/sign_in_request_dto.dart';
+import 'package:instagram_clone/features/authentication/domain/entity/user_entity.dart';
 import 'package:instagram_clone/features/authentication/domain/reponsitory/auth_repository.dart';
 
 class SignInWithEmailPassword {
@@ -10,10 +11,13 @@ class SignInWithEmailPassword {
 
   final AuthRepository authRepository = di.get<AuthRepository>();
 
-  Future<bool> call() async {
+  Future<UserEntity> call() async {
     final result = await authRepository.signInWithEmailPassword(
       SignInRequestDto(email: email, password: password),
     );
-    return result;
+    return result.fold(
+      (failure) => throw Exception(failure.message),
+      (success) => success,
+    );
   }
 }

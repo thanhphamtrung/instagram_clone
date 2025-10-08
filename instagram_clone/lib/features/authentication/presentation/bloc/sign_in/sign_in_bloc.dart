@@ -30,12 +30,12 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
         event.password,
       ).call();
 
-      if (result) {
+      if (result.id.isNotEmpty) {
         emit(SignInSuccess());
       } else {
         emit(SignInFailure('Invalid email or password'));
       }
-    } catch (e) {
+    } on Exception catch (e) {
       emit(SignInFailure(e.toString()));
     }
   }

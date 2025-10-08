@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import 'package:instagram_clone/core/di/di_container.dart';
+import 'package:instagram_clone/core/router/app_route.dart';
 import 'package:instagram_clone/features/authentication/presentation/bloc/sign_in/sign_in_bloc.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -92,15 +94,26 @@ class _SignInScreenState extends State<SignInScreen> {
                             : const Text('Sign In'),
                       ),
                       const SizedBox(height: 12),
-                      TextButton(
-                        onPressed: () {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Forgot password?'),
-                            ),
-                          );
-                        },
-                        child: const Text('Forgot password?'),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          TextButton(
+                            onPressed: () {
+                              context.goNamed(RouteNames.signUp);
+                            },
+                            child: const Text('Sign Up'),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Forgot password?'),
+                                ),
+                              );
+                            },
+                            child: const Text('Forgot password?'),
+                          ),
+                        ],
                       ),
                     ],
                   ),

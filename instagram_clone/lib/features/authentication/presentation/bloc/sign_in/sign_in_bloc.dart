@@ -8,9 +8,9 @@ part 'sign_in_state.dart';
 
 class SignInBloc extends Bloc<SignInEvent, SignInState> {
   SignInBloc() : super(SignInInitial()) {
-    on<SignInEmailEvent>(_onSignInEmailEvent);
+    on<SignInEmailEvent>(_onSignInEmail);
 
-    on<SignInGoogleEvent>(_onSignInGoogleEvent);
+    on<SignInGoogleEvent>(_onSignInGoogle);
   }
 
   /// Sign in with email and password
@@ -18,7 +18,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
   /// @param event - The event to sign in with email and password
   /// @param emit - The emitter to emit the state
   /// @return void
-  Future<void> _onSignInEmailEvent(
+  Future<void> _onSignInEmail(
     SignInEmailEvent event,
     Emitter<SignInState> emit,
   ) async {
@@ -30,17 +30,16 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
         event.password,
       ).call();
 
-      if (result.id.isNotEmpty) {
-        emit(SignInSuccess());
-      } else {
-        emit(SignInFailure('Invalid email or password'));
-      }
+      result.fold(
+        (failure) => emit(SignInFailure(failure)),
+        (success) => emit(SignInSuccess()),
+      );
     } on Exception catch (e) {
       emit(SignInFailure(e.toString()));
     }
   }
 
-  Future<void> _onSignInGoogleEvent(
+  Future<void> _onSignInGoogle(
     SignInGoogleEvent event,
     Emitter<SignInState> emit,
   ) async {

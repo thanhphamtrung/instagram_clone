@@ -1,7 +1,9 @@
 class RouteNames {
-  static const String login = 'login';
+  static const String signIn = 'signIn';
+  static const String signUp = 'signUp';
 }
 
 class RoutePaths {
-  static const String login = '/login';
+  static const String signIn = '/signIn';
+  static const String signUp = '/signUp';
 }

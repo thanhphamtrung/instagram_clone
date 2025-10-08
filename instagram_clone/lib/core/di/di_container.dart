@@ -7,8 +7,8 @@ final GetIt di = GetIt.instance;
 
 class DiContainer {
   static Future<void> init() async {
-    await DiBloc.registerBlocs(di);
     await DiDataSource.registerDataSources(di);
     await DiRepository.registerRepositories(di);
+    await DiBloc.registerBlocs(di);
   }
 }

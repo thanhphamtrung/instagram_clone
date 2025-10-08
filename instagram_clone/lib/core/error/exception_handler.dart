@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:instagram_clone/core/error/failure.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ExceptionHandler {
   static BaseFailure handleException(Exception e) {
@@ -25,6 +26,13 @@ class ExceptionHandler {
           );
       }
     }
+
+    if (e is AuthApiException) {
+      return AuthFailure(
+        message: e.message,
+      );
+    }
+
     return const UnknownFailure(
       message: 'Unknown error',
     );

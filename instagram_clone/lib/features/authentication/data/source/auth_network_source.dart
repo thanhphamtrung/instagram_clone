@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:instagram_clone/features/authentication/data/source/auth_local_source.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'package:instagram_clone/core/di/di_container.dart';
@@ -21,19 +22,30 @@ class AuthNetworkSource implements AuthRepository {
         password: dto.password,
       );
       if (response.session != null) {
+        await di.get<AuthLocalSource>().saveAccessToken(
+          response.session!.accessToken,
+        );
         return Right(
           UserEntity(
             id: response.session?.user.id ?? '',
-            email: response.session!.user.email!,
+            email: response.session?.user.email ?? '',
           ),
         );
       } else {
-        return const Left(AuthFailure('Invalid email or password'));
+        return const Left(
+          AuthFailure(
+            message: 'Invalid email or password',
+          ),
+        );
       }
-    } 
+    }
     // TODO: create exception handler in core2
     on AuthApiException catch (e) {
-      return Left(AuthFailure(e.message));
+      return Left(
+        AuthFailure(
+          message: e.message,
+        ),
+      );
     }
   }
 
